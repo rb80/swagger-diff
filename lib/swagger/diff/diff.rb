@@ -42,8 +42,13 @@ module Swagger
       def incompatibilities_message(csvOrYaml)
         @outputFormat = csvOrYaml
         msg = ''
-        msg += endpoints_message('missing', incompatibilities[:endpoints])
-        msg += endpoints_message('deprecated', incompatibilities[:deprecated_endpoints])
+        if @outputFormat == "csv"
+          msg += endpoints_message('missing,n/a', incompatibilities[:endpoints])
+          msg += endpoints_message('deprecated,n/a', incompatibilities[:deprecated_endpoints])
+        else
+          msg += endpoints_message('missing', incompatibilities[:endpoints])
+          msg += endpoints_message('deprecated', incompatibilities[:deprecated_endpoints])
+        end
         msg += params_message('incompatible', incompatibilities[:request_params])
         msg += attributes_message('incompatible', incompatibilities[:response_attributes])
         msg
