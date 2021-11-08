@@ -43,8 +43,8 @@ module Swagger
         @outputFormat = csvOrYaml
         msg = ''
         if @outputFormat == "csv"
-          msg += endpoints_message('missing,n/a', incompatibilities[:endpoints])
-          msg += endpoints_message('deprecated,n/a', incompatibilities[:deprecated_endpoints])
+          msg += endpoints_message('missing,n/a,n/a', incompatibilities[:endpoints])
+          msg += endpoints_message('deprecated,n/a,n/a', incompatibilities[:deprecated_endpoints])
         else
           msg += endpoints_message('missing', incompatibilities[:endpoints])
           msg += endpoints_message('deprecated', incompatibilities[:deprecated_endpoints])
@@ -58,9 +58,15 @@ module Swagger
 
       def changed_endpoints_message
         msg = ''
-        msg += endpoints_message('new', changes[:new_endpoints])
-        msg += endpoints_message('removed', changes[:removed_endpoints])
-        msg += endpoints_message('deprecated', changes[:deprecated_endpoints])
+        if @outputFormat == "csv"
+          msg += endpoints_message('new,n/a,n/a', changes[:new_endpoints])
+          msg += endpoints_message('removed,n/a,n/a', changes[:removed_endpoints])
+          msg += endpoints_message('deprecated,n/a', changes[:deprecated_endpoints])
+        else
+          msg += endpoints_message('new', changes[:new_endpoints])
+          msg += endpoints_message('removed', changes[:removed_endpoints])
+          msg += endpoints_message('deprecated', changes[:deprecated_endpoints])
+        end
         msg
       end
 
@@ -161,14 +167,14 @@ module Swagger
           enumerator = changed_request_params_enumerator(
             @new_specification,
             @old_specification,
-            '%<req>s is no longer required',
+            '%<req>s is no longer required,n/a',
             'new request param,%<req>s'
           )  
         else
           enumerator = changed_request_params_enumerator(
             @new_specification,
             @old_specification,
-            '%<req>s is no longer required',
+            '%<req>s is no longer required,n/a',
             'new request param: %<req>s'
           )  
         end
@@ -226,7 +232,7 @@ module Swagger
             @new_specification,
             @old_specification,
             'new attribute for %<code>s response,%<resp>s',
-            'new %<code>s response'
+            'new %<code>s response,n/a'
           )  
         else
           enumerator = changed_response_attributes_enumerator(
@@ -263,7 +269,7 @@ module Swagger
             @old_specification,
             @new_specification,
             'missing attribute from %<code>s response,%<resp>s',
-            'missing %<code>s response'
+            'missing %<code>s response,n/a'
           )
         else
           changed_response_attributes_enumerator(
