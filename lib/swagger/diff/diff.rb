@@ -61,7 +61,7 @@ module Swagger
         if @outputFormat == "csv"
           msg += endpoints_message('new,n/a,n/a', changes[:new_endpoints])
           msg += endpoints_message('removed,n/a,n/a', changes[:removed_endpoints])
-          msg += endpoints_message('deprecated,n/a', changes[:deprecated_endpoints])
+          msg += endpoints_message('deprecated,n/a,n/a', changes[:deprecated_endpoints])
         else
           msg += endpoints_message('new', changes[:new_endpoints])
           msg += endpoints_message('removed', changes[:removed_endpoints])
