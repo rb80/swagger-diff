@@ -19,10 +19,13 @@ module Swagger
 
       def changes_message(csvOrYaml)
         @outputFormat = csvOrYaml
-        if @outputFormat == "csv"
-          puts 'Endpoint,OperationId,Change,Category,Sub Category,Attribute'
+        msg = ''
+        #Header row only for CSV and only if there are actually changes
+        if @outputFormat == "csv" && (changed_endpoints_message + changed_params_message + changed_attrs_message != "")
+          msg += 'Endpoint,OperationId,Change,Category,Sub Category,Attribute'
         end
-        changed_endpoints_message + changed_params_message + changed_attrs_message
+        msg += changed_endpoints_message + changed_params_message + changed_attrs_message
+        msg
       end
 
       def compatible?
@@ -41,7 +44,10 @@ module Swagger
         @outputFormat = csvOrYaml
         msg = ''
         if @outputFormat == "csv"
-          puts 'Endpoint,OperationId,Change,Category,Sub Category,Attribute'
+          #Header row only for CSV and only if there are actually incompatibilities
+          if(endpoints_message('missing,n/a,n/a', incompatibilities[:endpoints]) != "")
+            msg += 'Endpoint,OperationId,Change,Category,Sub Category,Attribute'
+          end
           msg += endpoints_message('missing,n/a,n/a', incompatibilities[:endpoints])
         else
           msg += endpoints_message('missing', incompatibilities[:endpoints])
