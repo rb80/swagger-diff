@@ -17,7 +17,7 @@ module Swagger
         }
       end
 
-      def changes_message
+      def changes_message(csvOrYaml)
         @outputFormat = csvOrYaml
         if @outputFormat == "csv"
           puts 'Endpoint,OperationId,Change,Category,Sub Category,Attribute'
