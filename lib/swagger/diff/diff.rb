@@ -41,6 +41,7 @@ module Swagger
         @outputFormat = csvOrYaml
         msg = ''
         if @outputFormat == "csv"
+          puts 'Endpoint,OperationId,Change,Category,Sub Category,Attribute'
           msg += endpoints_message('missing,n/a,n/a', incompatibilities[:endpoints])
         else
           msg += endpoints_message('missing', incompatibilities[:endpoints])

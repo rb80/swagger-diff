@@ -157,7 +157,7 @@ module Swagger
         if prefix == "#{name}/" || prefix =~ %r{/#{name}(\[\])?/}
           # Anonymizing the reference in case the name changed (e.g.,
           # generated Swagger).
-          { all: ["#{key} (in: body, type: reference)"] }
+          { all: ["#{key} (in: body type: reference)"] }
         else
           refs(ref, "#{key}/")
         end
@@ -181,7 +181,7 @@ module Swagger
               else
                 'body'
               end
-        ret[:all].add("#{key} (in: #{loc}, type: #{schema['type']}#{'[]' if list})")
+        ret[:all].add("#{key} (in: #{loc} type: #{schema['type']}#{'[]' if list})")
       end
       # rubocop:enable Metrics/ParameterLists
 
@@ -217,7 +217,7 @@ module Swagger
                else
                  '*'
                end
-        "#{key} (in: body, type: Hash[string, #{type}])"
+        "#{key} (in: body type: Hash[string, #{type}])"
       end
 
       def properties(properties, required, prefix = '')
@@ -250,7 +250,7 @@ module Swagger
             merge_refs!(ret, schema(param))
           else
             ret[:required].add(param['name']) if param['required']
-            ret[:all].add("#{param['name']} (in: #{param['in']}, type: #{param['type']})")
+            ret[:all].add("#{param['name']} (in: #{param['in']} type: #{param['type']})")
           end
         end
         ret
