@@ -20,11 +20,12 @@ module Swagger
       def changes_message(csvOrYaml)
         @outputFormat = csvOrYaml
         msg = ''
+        temp = changed_endpoints_message + changed_params_message + changed_attrs_message
         #Header row only for CSV and only if there are actually changes
-        if @outputFormat == "csv" && (changed_endpoints_message + changed_params_message + changed_attrs_message != "")
-          msg += 'Endpoint,OperationId,Change,Category,Sub Category,Attribute'
+        if @outputFormat == "csv" && (!temp.empty?)
+          msg += "Endpoint,OperationId,Change,Category,Sub Category,Attribute\n"
         end
-        msg += changed_endpoints_message + changed_params_message + changed_attrs_message
+        msg += temp
         msg
       end
 
@@ -45,10 +46,11 @@ module Swagger
         msg = ''
         if @outputFormat == "csv"
           #Header row only for CSV and only if there are actually incompatibilities
-          if(endpoints_message('missing,n/a,n/a', incompatibilities[:endpoints]) != "")
-            msg += 'Endpoint,OperationId,Change,Category,Sub Category,Attribute'
+          temp = endpoints_message('missing,n/a,n/a', incompatibilities[:endpoints])+params_message('incompatible', incompatibilities[:request_params])+attributes_message('incompatible', incompatibilities[:response_attributes])
+          if(!temp.empty?)
+            msg += "Endpoint,OperationId,Change,Category,Sub Category,Attribute\n"
           end
-          msg += endpoints_message('missing,n/a,n/a', incompatibilities[:endpoints])
+          msg += temp
         else
           msg += endpoints_message('missing', incompatibilities[:endpoints])
         end
