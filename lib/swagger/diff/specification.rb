@@ -73,6 +73,7 @@ module Swagger
         parsed['paths'].each do |path, items|
           # TODO: this doesn't handle external definitions ($ref).
           warn 'External definitions are not (yet) supported' if items.key?('$ref')
+          path = parsed['basePath']+path
           (verbs & items.keys).each do |verb|
             if items['parameters']
               if items[verb]['parameters']
