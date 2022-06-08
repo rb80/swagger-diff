@@ -226,12 +226,20 @@ module Swagger
       end
 
       def new_or_changed_response_attributes
-        enumerator = changed_response_attributes_enumerator(
-          @new_specification,
-          @old_specification,
-          'new attribute for %<code>s response: %<resp>s',
-          'new %<code>s response'
-        )
+        if @outputFormat == "csv"
+          enumerator = changed_response_attributes_enumerator(
+            @new_specification,
+            @old_specification,
+            'new attribute for %<code>s response,%<resp>s',
+            'new %<code>s response'
+          )
+        else
+          enumerator = changed_response_attributes_enumerator(
+            @new_specification,
+            @old_specification,
+            'new attribute for %<code>s response: %<resp>s',
+            'new %<code>s response'
+          )
         change_hash(enumerator)
       end
 
