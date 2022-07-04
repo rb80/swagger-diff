@@ -240,6 +240,7 @@ module Swagger
             'new attribute for %<code>s response: %<resp>s',
             'new %<code>s response'
           )
+        end
         change_hash(enumerator)
       end
 
