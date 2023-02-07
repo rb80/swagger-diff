@@ -8,7 +8,7 @@
 > You can tell me by the way I walk - Genesis
 
 Swagger::Diff is a utility for comparing two different
-[Open API Initiative (OAI)](https://openapis.org/) specifications (fka
+[Open API Initiative (OAI)](https://openapis.org/) v2 specifications (fka
 [Swagger](http://swagger.io/) specifications).
 Its intended use is to determine whether a newer API specification is
 backwards-compatible with an older API specification.
@@ -142,6 +142,12 @@ The command-line version can also be used to generate a list of all changes
 
 ```bash
 $ swagger-diff -c <old> <new>
+```
+
+It can also output in CSV rather than YAML:
+
+```bash
+$ swagger-diff --csv <old> <new>
 ```
 
 ## Gem Development
