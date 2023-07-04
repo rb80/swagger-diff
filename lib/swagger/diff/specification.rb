@@ -82,7 +82,7 @@ module Swagger
                 items[verb]['parameters'] = items['parameters']
               end
             end
-            ret["#{verb} #{path.gsub(/{.*?}/, '{}')}"] = items[verb]
+            ret["#{verb} #{path}"] = items[verb]
           end
         end
         ret
