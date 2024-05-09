@@ -95,7 +95,8 @@ module Swagger
             msg = ''
             endpoints.each do |endpoint|
               urlSplit = endpoint.split(" operationId:")
-              msg += "#{urlSplit[0]},#{urlSplit[1]},#{type},endpoints\n"
+              typeMinusComma = type.gsub(",",""); #replace Hash[string, *] with Hash[string *] to avoid the comma being treated as another column
+              msg += "#{urlSplit[0]},#{urlSplit[1]},#{typeMinusComma},endpoints\n"
             end
           else
             msg = "- #{type} endpoints\n"
