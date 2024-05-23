@@ -82,8 +82,10 @@ module Swagger
                 items[verb]['parameters'] = items['parameters']
               end
             end
-            #ret["#{verb} #{path}"] = items[verb]
-            ret["#{verb} #{path.gsub(/{.*?}/, '{}')} operationId:#{items[verb]['operationId']}"] = items[verb]
+            # Use this to compare based upon verb and path
+            ret["#{verb} #{path}"] = items[verb]
+            # Use this to compare based upon verb + path + operationId.  Implications: If operationId changes then this will flag one removal, one addition - even though the operationId is not part of the request
+            # ret["#{verb} #{path.gsub(/{.*?}/, '{}')} operationId:#{items[verb]['operationId']}"] = items[verb]
           end
         end
         ret
